@@ -10,6 +10,13 @@ namespace lve {
             LveWindow(int w, int h, std::string name);
             ~LveWindow();
 
+            // disable copy constructor
+            // were adhearing to RAII (Resource acquisition is initialization). Destructors handle cleanup.
+            LveWindow(const LveWindow &) = delete;
+            // disalble copy operator
+            LveWindow &operator=(const LveWindow &) = delete;
+            bool shouldClose() { return glfwWindowShouldClose(window); };
+
         private:
             void initWindow();
             const int width;
