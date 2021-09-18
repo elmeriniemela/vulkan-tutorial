@@ -3,22 +3,37 @@
 #include "lve_window.hpp"
 #include "lve_pipeline.hpp"
 #include "lve_device.hpp"
+#include "lve_swap_chain.hpp"
 
+#include <memory>
+#include <vector>
 
-namespace lve {
-    class FirstApp {
-        public:
-            static constexpr int WIDTH = 800;
-            static constexpr int HEIGHT = 600;
-            void run();
+namespace lve
+{
+    class FirstApp
+    {
+    public:
+        static constexpr int WIDTH = 800;
+        static constexpr int HEIGHT = 600;
 
-        private:
-            LveWindow lveWindow{WIDTH, HEIGHT, "VulkanTest"};
-            LveDevice lveDevice{lveWindow};
-            LvePipeline lvePipeline{
-                lveDevice,
-                "shaders/simple_shader.vert.spv",
-                "shaders/simple_shader.frag.spv",
-                LvePipeline::defaultPipelineConfigInfo(WIDTH, HEIGHT)};
+        FirstApp();
+        ~FirstApp();
+        FirstApp(const FirstApp &) = delete;            // disable copy constructor
+        FirstApp &operator=(const FirstApp &) = delete; // disalble copy operator
+
+        void run();
+
+    private:
+        void createPipelineLayout();
+        void createPipeline();
+        void createCommandBuffers();
+        void drawFrame();
+
+        LveWindow lveWindow{WIDTH, HEIGHT, "VulkanTest"};
+        LveDevice lveDevice{lveWindow};
+        LveSwapChain lveSwapChain{lveDevice, lveWindow.getExtent()};
+        std::unique_ptr<LvePipeline> lvePipeline;
+        VkPipelineLayout pipelineLayout;
+        std::vector<VkCommandBuffer> commandBuffers;
     };
 }
