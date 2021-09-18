@@ -3,7 +3,7 @@
 
 Based on tutorial series by Brendan Galea: https://www.youtube.com/watch?v=Y9U9IE0gVHA&list=PL8327DO66nu9qYVKLDmdLW_84-yE4auCR
 
-#### Install on Linux:
+#### Install on Arch based Linux distro:
 https://vulkan-tutorial.com/Development_environment#page_Vulkan-Packages
 
 * Vulkan: `sudo pacman -S vulkan-headers vulkan-validation-layers vulkan-tools vulkan-icd-loader vulkan-intel`
