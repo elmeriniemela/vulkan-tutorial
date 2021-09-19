@@ -3,6 +3,7 @@
 
 #include <array>
 #include <stdexcept>
+#include <cassert>
 
 namespace lve
 {
@@ -87,14 +88,29 @@ namespace lve
             glfwWaitEvents();
         }
         vkDeviceWaitIdle(lveDevice.device());
-        lveSwapChain = std::make_unique<LveSwapChain>(lveDevice, extent);
+        if (lveSwapChain == nullptr)
+        {
+            lveSwapChain = std::make_unique<LveSwapChain>(lveDevice, extent);
+        }
+        else
+        {
+            lveSwapChain = std::make_unique<LveSwapChain>(lveDevice, extent, std::move(lveSwapChain));
+            if (lveSwapChain->imageCount() != commandBuffers.size())
+            {
+                freeCommandBuffers();
+                createCommandBuffers();
+            }
+        }
 
         createPipeline();
     }
 
     void FirstApp::createPipeline()
     {
-        auto pipelineConfig = LvePipeline::defaultPipelineConfigInfo(lveSwapChain->width(), lveSwapChain->height());
+        assert(lveSwapChain != nullptr && "Cannot create pipeline before swap chain");
+        assert(pipelineLayout != nullptr && "Cannot create pipeline before pipeline layout");
+        PipelineConfigInfo pipelineConfig{};
+        LvePipeline::defaultPipelineConfigInfo(pipelineConfig);
         pipelineConfig.renderPass = lveSwapChain->getRenderPass();
         pipelineConfig.pipelineLayout = pipelineLayout;
         lvePipeline = std::make_unique<LvePipeline>(
