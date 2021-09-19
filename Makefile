@@ -1,4 +1,4 @@
-CFLAGS = -std=c++17 -O2
+CFLAGS = -std=c++17 -O2 -I lib/tinyobjloader
 LDFLAGS = -lglfw -lvulkan -ldl -lpthread -lX11 -lXxf86vm -lXrandr -lXi
 
 vertSources = $(shell find ./shaders -type f -name "*.vert")
