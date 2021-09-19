@@ -26,8 +26,8 @@ namespace lve
     public:
         LvePipeline(LveDevice &device, const std::string &vertFilepath, const std::string &fragFilepath, const PipelineConfigInfo &configInfo);
         ~LvePipeline();
-        LvePipeline(const LvePipeline &) = delete;    // disable copy constructor
-        void operator=(const LvePipeline &) = delete; // disalble copy operator
+        LvePipeline(const LvePipeline &) = delete;            // disable copy constructor
+        LvePipeline &operator=(const LvePipeline &) = delete; // disalble copy operator
         void bind(VkCommandBuffer commandBuffer);
         static PipelineConfigInfo defaultPipelineConfigInfo(uint32_t width, uint32_t height);
 

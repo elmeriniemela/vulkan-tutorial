@@ -16,14 +16,20 @@ namespace lve
 
         LveWindow(const LveWindow &) = delete;            // disable copy constructor
         LveWindow &operator=(const LveWindow &) = delete; // disalble copy operator
+
         bool shouldClose() { return glfwWindowShouldClose(window); };
-        VkExtent2D getExtent() { return {static_cast<uint32_t>(width), static_cast<uint32_t>(height)}; };
+        bool wasWindowResized() { return framebufferResized; }
+        void resetWindowResizedFlag() { framebufferResized = false; }
+
         void createWindowSurface(VkInstance instance, VkSurfaceKHR *surface);
+        VkExtent2D getExtent() { return {static_cast<uint32_t>(width), static_cast<uint32_t>(height)}; };
 
     private:
+        static void framebufferResizeCallback(GLFWwindow *window, int width, int height);
         void initWindow();
-        const int width;
-        const int height;
+        int width;
+        int height;
+        int framebufferResized;
         std::string windowName;
         GLFWwindow *window;
     };
