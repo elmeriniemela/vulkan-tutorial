@@ -11,7 +11,7 @@ https://vulkan-tutorial.com/Development_environment#page_Vulkan-Packages
 * Window creation and display: `sudo pacman -S glfw-x11`
 * Linear algebra: `sudo pacman -S glm`
 * Shader compiler (glslc): `sudo pacman -S shaderc`
-* tinyobjloader: `git submodule update --init`
+* tinyobjloader: `yay -S tinyobjloader`
 
 #### Setup VS-Code for development:
 * VS-code extensions: `ms-vscode.cpptools` `slevesque.shader` `cadenas.vscode-glsllint` `xaver.clang-format`
